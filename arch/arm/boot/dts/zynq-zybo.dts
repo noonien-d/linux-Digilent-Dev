@@ -329,5 +329,37 @@
 			interrupts = <0 7 4>;
 			reg = <0xf8007100 0x20>;
 		} ;
+
+		i2c0: i2c@e0004000 {
+			bus-id = <0>;
+			compatible = "cdns,i2c-r1p10";
+			clock-frequency = <400000>;
+			status = "okay";
+			clocks = <&clkc 38>;
+			interrupt-parent = <&ps7_scugic_0>;
+			interrupts = <0 25 4>;
+			reg = <0xe0004000 0x1000>;
+			xlnx,has-interrupt = <0x0>;
+
+			ssm2602: ssm2602@1a {
+				compatible = "adi,ssm2602";
+				reg = <0x1a>;
+			};
+		};
+
+		axi_i2s: axi-i2s@0x43C10000 {
+			compatible = "adi,axi-i2s-1.00.a";
+			reg = <0x43C10000 0x1000>;
+			clocks = <&clkc 15 &clkc 17>;
+			clock-names = "axi", "ref";
+			dmas = <&ps7_dma_s 0 &ps7_dma_s 1>;
+			dma-names = "tx", "rx";
+		};
+
+		zybo_ssm2602_snd: zybo_ssm2602_snd {
+			compatible = "zybo-ssm2602-snd";
+			audio-codec = <&ssm2602>;
+			cpu-dai = <&axi_i2s>;
+		};
 	} ;
 } ;

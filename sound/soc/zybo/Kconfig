@@ -1,0 +1,6 @@
+config SND_SOC_ZYBO_SSM2602
+	tristate "Zybo board sound support"
+	depends on SND_SOC_ADI
+	depends on I2C
+	select SND_SOC_AXI_I2S
+	select SND_SOC_SSM2602
